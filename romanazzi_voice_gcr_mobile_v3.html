@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Romanazzi Voice · IISS G. Cesare – D. Romanazzi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--blue:#2a45c9;--red:#e2403a;--yellow:#ffc933;--bg:#f6f8ff;--ink:#12163a;--muted:#525a86;--card:#fff;
+--disp:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;--sans:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.6 var(--sans);overflow-x:hidden}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.wrap{width:min(1120px,100% - 2.5rem);margin-inline:auto}
+
+/* banner */
+.banner{background:#fff;border-bottom:3px solid var(--ink)}
+.banner .wrap{display:flex;align-items:center;gap:1rem;padding:.8rem 0}
+.logo{width:78px;flex:none}
+.logo img{width:100%;display:block;mix-blend-mode:multiply}
+.ident{line-height:1.1}
+.ident small{display:block;font-size:.78rem;color:var(--muted);font-weight:500}
+.ident strong{display:block;font:800 clamp(1.15rem,2.8vw,1.75rem)/1.05 var(--disp);letter-spacing:-.01em;margin:.15rem 0}
+.ident span{font-size:.85rem;font-weight:700;color:var(--red)}
+.tag{margin-left:auto;background:var(--yellow);border:2.5px solid var(--ink);border-radius:99px;padding:.35rem .9rem;font-weight:700;font-size:1.3rem;transform:rotate(2deg);box-shadow:3px 3px 0 var(--ink);white-space:nowrap}
+
+/* hero */
+.hero{padding:clamp(2.5rem,6vw,4.5rem) 0 1rem;position:relative}
+.hero h1{font:800 clamp(2.8rem,9vw,7rem)/.93 var(--disp);letter-spacing:-.04em;margin:0;max-width:11ch}
+.hero h1 .u{background:linear-gradient(transparent 62%,var(--yellow) 62% 92%,transparent 92%);padding:0 .1em}
+.hero h1 .r{color:var(--red);display:inline-block;transform:rotate(-3deg)}
+.hero p{max-width:46ch;color:var(--muted);font-size:1.2rem;margin:1.5rem 0 0}
+.blob{position:absolute;right:0;top:2.5rem;width:clamp(100px,24vw,290px);aspect-ratio:1;background:var(--blue);border:3px solid var(--ink);border-radius:58% 42% 55% 45%/48% 58% 42% 52%;box-shadow:8px 8px 0 var(--ink);display:grid;place-items:center;color:#fff;font:800 clamp(1rem,2.4vw,1.7rem)/1.05 var(--disp);text-align:center;transform:rotate(6deg);padding:1rem;font-size:2.3rem}
+.blob b{color:var(--yellow)}
+
+/* selectors */
+.select{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.2rem,3vw,2.2rem);margin-top:3rem}
+.pick{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;min-height:300px;padding:clamp(1.4rem,3.5vw,2.2rem);border:3px solid var(--ink);border-radius:26px;box-shadow:7px 7px 0 var(--ink);transition:transform .15s,box-shadow .15s;position:relative}
+.pick:hover{transform:translate(-3px,-3px) rotate(-.6deg);box-shadow:10px 10px 0 var(--ink)}
+.pick:active{transform:translate(4px,4px);box-shadow:3px 3px 0 var(--ink)}
+.pick:focus-visible{outline:3px solid var(--ink);outline-offset:5px}
+.pick.a{background:var(--red);color:#fff}
+.pick.b{background:var(--yellow)}
+.pick h2{font:800 clamp(1.9rem,4vw,3rem)/.98 var(--disp);letter-spacing:-.03em;margin:0 0 .8rem}
+.pick p{margin:0;max-width:34ch}
+.pick .go{align-self:flex-start;margin-top:1.6rem;background:var(--ink);color:#fff;font-weight:700;padding:.6rem 1.2rem;border-radius:99px}
+.pick[aria-selected="true"]::after{content:"aperto";position:absolute;top:-14px;right:18px;background:var(--blue);color:#fff;border:3px solid var(--ink);border-radius:99px;padding:.1rem .8rem;font:700 .85rem var(--sans)}
+
+/* panels */
+.panel{display:none;margin-top:2.2rem;background:var(--card);border:3px solid var(--ink);border-radius:26px;box-shadow:7px 7px 0 var(--ink);padding:clamp(1.4rem,4vw,2.6rem);grid-template-columns:1fr 1.5fr;gap:2.5rem}
+.panel.open{display:grid;animation:pop .3s cubic-bezier(.3,1.4,.5,1)}
+@keyframes pop{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.panel.open{animation:none}.pick{transition:none}html{scroll-behavior:auto}}
+.panel h3{font:800 2rem/1 var(--disp);letter-spacing:-.03em;margin:0 0 .8rem}
+.side p{color:var(--muted);margin:.4rem 0}
+.help{margin-top:1.3rem;padding:1rem 1.1rem;background:#ffe9e7;border:2.5px solid var(--ink);border-radius:16px;font-size:.95rem;transform:rotate(-1deg)}
+.sug .help{background:#fff3c4}
+form{display:grid;gap:1.1rem}
+label{display:grid;gap:.4rem;font-weight:700;font-size:.95rem}
+input,select,textarea{font:400 1rem var(--sans);color:var(--ink);background:var(--bg);border:2.5px solid var(--ink);border-radius:14px;padding:.7rem .9rem;width:100%}
+textarea{min-height:130px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:3px solid var(--blue);outline-offset:2px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.check{display:flex;gap:.7rem;align-items:flex-start;font-weight:400}
+.check input{width:1.2rem;height:1.2rem;margin-top:.2rem;accent-color:var(--blue)}
+button.send{all:unset;box-sizing:border-box;cursor:pointer;justify-self:start;background:var(--blue);color:#fff;font:700 1.05rem var(--sans);padding:.85rem 1.6rem;border:3px solid var(--ink);border-radius:99px;box-shadow:4px 4px 0 var(--ink)}
+.sug button.send{background:var(--yellow);color:var(--ink)}
+button.send:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+button.send:focus-visible{outline:3px solid var(--ink);outline-offset:4px}button.send:disabled{cursor:wait}
+.ok{display:none;padding:1rem 1.2rem;background:#d9f5df;border:2.5px solid var(--ink);border-radius:16px;font-weight:700}
+
+/* about */
+.about{margin:4.5rem 0 0;display:flex;flex-wrap:wrap;gap:1.5rem 3rem;align-items:center;justify-content:space-between;border-top:3px solid var(--ink);padding-top:2rem}
+.about h4{font:800 1.7rem/1.05 var(--disp);letter-spacing:-.02em;margin:0;max-width:22ch}
+.about p{margin:0;max-width:44ch;color:var(--muted)}
+footer{margin-top:3rem;background:var(--ink);color:#c8ceee;font-size:.9rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:.5rem 2rem;justify-content:space-between;padding:1.4rem 0}
+footer a{color:var(--yellow)}
+
+@media (max-width:820px){
+  .banner .wrap{flex-wrap:nowrap;gap:.65rem}
+  .tag{margin-left:auto;font-size:.68rem;padding:.28rem .48rem}
+  .logo{width:58px}
+  .ident{min-width:0}
+  .ident small{font-size:.65rem}
+  .ident strong{font-size:1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ident span{font-size:.72rem}
+
+  .hero{
+    padding-top:2rem;
+    padding-right:0;
+    position:relative;
+  }
+  .hero h1{
+    max-width:calc(100% - 105px);
+    margin-bottom:.8rem;
+  }
+  .hero p{
+    font-size:1.05rem;
+    padding-right:0;
+  }
+  .blob{
+    position:absolute;
+    right:0;
+    top:2rem;
+    width:92px;
+    height:92px;
+    margin:0;
+    padding:.3rem;
+    font-size:.68rem;
+    border-width:2px;
+    box-shadow:4px 4px 0 var(--ink);
+  }
+
+  .select{grid-template-columns:1fr;gap:1rem}
+  .pick{min-height:230px}
+  .panel.open{grid-template-columns:1fr;gap:1.5rem}
+  .row{grid-template-columns:1fr}
+  .panel{padding:1.2rem}
+  input,select,textarea{font-size:16px}
+  button.send{width:100%;text-align:center}
+}
+  .select{grid-template-columns:1fr;gap:1rem}
+  .pick{min-height:230px}
+  .panel.open{grid-template-columns:1fr;gap:1.5rem}
+  .row{grid-template-columns:1fr}
+  .panel{padding:1.2rem}
+  input,select,textarea{font-size:16px}
+  button.send{width:100%;text-align:center}
+}
+ 
+/* Final layout overrides */
+.tag{
+  font-size:1.08rem;
+  padding:.48rem 1rem;
+}
+.blob{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  line-height:.86;
+  text-align:center;
+}
+.blob b{
+  display:block;
+  margin:0;
+  line-height:.9;
+  font-size:.9em;
+}
+@media (min-width:821px){
+  .blob{
+    padding:.7rem;
+  }
+  .blob b{
+    margin-top:.05em;
+  }
+}
+</style>
+</head>
+<body>
+<header class="banner">
+  <div class="wrap">
+    <div class="logo"><img src="gcr.png" alt="Logo GCR"></div>
+    <div class="ident">
+      <small>Istituto d'Istruzione Superiore Statale</small>
+      <strong>IISS G. Cesare – D. Romanazzi</strong>
+      <span>Bari (BA)</span>
+    </div>
+    <div class="tag">Gestito dai Rappresentanti D'istituto</div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Qui la <span class="u">tua voce</span> <span class="r">conta.</span></h1>
+    <p>Qualcosa non va o hai un'idea per far stare meglio tutti? Scrivilo qui. Lo leggiamo noi studenti, insieme ai docenti referenti.</p>
+    <div class="blob" aria-hidden="true">100% <b>anonimo</b></div>
+  </section>
+
+  <section aria-label="Scegli cosa vuoi fare">
+    <div class="select" role="tablist">
+      <button class="pick a" role="tab" id="t1" aria-controls="p1" aria-selected="false">
+        <span><h2>Segnalazioni di bullismo</h2><p>Hai subìto o visto qualcosa che non va, in classe o online? Non restare da solo: raccontacelo.</p></span>
+        <span class="go">Segnala</span>
+      </button>
+      <button class="pick b" role="tab" id="t2" aria-controls="p2" aria-selected="false">
+        <span><h2>Consigli per miglioramenti scolastici</h2><p>Aule, orari, prof, attività: cosa cambieresti della tua scuola?</p></span>
+        <span class="go">Dai un consiglio</span>
+      </button>
+    </div>
+
+    <div class="panel" id="p1" role="tabpanel" aria-labelledby="t1">
+      <div class="side">
+        <h3>Raccontaci cosa è successo</h3>
+        <p>Puoi restare anonimo. Se lasci un contatto possiamo aiutarti meglio e risponderti.</p>
+        <div class="help"><strong>Non aver paura di parlarne, siamo qui per aiutare!</strong></div>
+      </div>
+      <form data-form>
+        <input type="hidden" name="tipo" value="Segnalazione di bullismo">
+        <div class="row">
+          <label>Chi sei?<select name="chi"><option>Studente</option><option>Genitore</option><option>Docente o personale</option><option>Preferisco non dirlo</option></select></label>
+        </div>
+        <label>Dove?<select name="dove"><option>In classe</option><option>Corridoi o bagni</option><option>Cortile o palestra</option><option>Online o social</option><option>Fuori dalla scuola</option></select></label>
+        <label>Cosa è successo?<textarea name="messaggio" required placeholder="Scrivilo con parole tue."></textarea></label>
+        <label>Vuoi essere ricontattato? (facoltativo)<input type="text" name="mail" placeholder="Email o classe"></label>
+        <label class="check"><input type="checkbox" required> Acconsento al trattamento dei dati per gestire la segnalazione.</label>
+        <button class="send" type="submit">Invia la segnalazione</button>
+        <div class="ok" role="status">Ricevuto. Grazie per averlo detto: ora ce ne occupiamo noi.</div>
+      </form>
+    </div>
+
+    <div class="panel sug" id="p2" role="tabpanel" aria-labelledby="t2">
+      <div class="side">
+        <h3>Che idea hai?</h3>
+        <p>Le proposte migliori le portiamo alla Consulta e al Consiglio d'Istituto.</p>
+        <div class="help">Un consiglio funziona meglio se dici qual è il problema e come lo risolveresti.</div>
+      </div>
+      <form data-form>
+        <input type="hidden" name="tipo" value="Consiglio di miglioramento">
+        <div class="row">
+          <label>Area<select name="dove"><option>Didattica</option><option>Laboratori e attrezzature</option><option>Spazi e sicurezza</option><option>Orari e organizzazione</option><option>Attività extra-scuola</option><option>Altro</option></select></label>
+          <label>Sei<select name="chi"><option>Studente</option><option>Genitore</option><option>Docente o personale</option></select></label>
+        </div>
+        <label>Titolo<input type="text" name="titolo" required placeholder="Es. Più prese elettriche in aula studio"></label>
+        <label>Spiegaci l'idea<textarea name="messaggio" required></textarea></label>
+        <label>Email (facoltativa)<input type="email" name="mail" placeholder="Se vuoi una risposta"></label>
+        <button class="send" type="submit">Invia il consiglio</button>
+        <div class="ok" role="status">Grazie! La tua idea è arrivata.</div>
+      </form>
+    </div>
+  </section>
+
+  <section class="about">
+    <h4>Fatto da studenti, per gli studenti.</h4>
+    <p>Per informazioni ufficiali su orari, iscrizioni e circolari vai al <a href="https://www.giuliocesareromanazzi.edu.it/">sito della scuola</a>.</p>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>IISS G. Cesare – D. Romanazzi · Bari</span></div></footer>
+
+<script>
+const ENDPOINT='https://script.google.com/macros/s/AKfycbzRy1jeJrNPFFZpdCV9A47eCadiCe5a46ssydeWuhobvMudB3_Fr_wtb5Z_6cSVvjzX/exec';
+
+const tabs=[...document.querySelectorAll('.pick')],panels=[...document.querySelectorAll('.panel')];
+function show(i){const opening=!panels[i].classList.contains('open');
+panels.forEach((p,k)=>p.classList.toggle('open',k===i&&opening));
+tabs.forEach((t,k)=>t.setAttribute('aria-selected',k===i&&opening));
+if(opening)panels[i].scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'nearest'})}
+tabs.forEach((t,i)=>t.addEventListener('click',()=>show(i)));
+
+document.querySelectorAll('[data-form]').forEach(f=>{
+  const ok=f.querySelector('.ok');
+  const btn=f.querySelector('.send');
+  const okMsg=ok.textContent;
+
+  f.addEventListener('submit',async e=>{
+    e.preventDefault();
+
+    if(btn.dataset.sending==='1') return;
+
+    ok.style.display='none';
+    btn.dataset.sending='1';
+    btn.disabled=true;
+    btn.style.pointerEvents='none';
+    btn.style.opacity='.6';
+
+    try{
+      const body=new URLSearchParams(new FormData(f));
+
+      await fetch(ENDPOINT,{
+        method:'POST',
+        mode:'no-cors',
+        body
+      });
+
+      /*
+       * With no-cors the browser cannot read the Apps Script response.
+       * A completed fetch therefore means the request was handed off;
+       * server-side errors remain visible in Apps Script executions.
+       */
+      ok.textContent=okMsg;
+      f.reset();
+    }catch(err){
+      ok.textContent='Non siamo riusciti a inviare. Controlla la connessione e riprova.';
+    }finally{
+      ok.style.display='block';
+      btn.dataset.sending='';
+      btn.disabled=false;
+      btn.style.pointerEvents='';
+      btn.style.opacity='';
+    }
+  });
+});
+</script>
+</body>
+</html>
